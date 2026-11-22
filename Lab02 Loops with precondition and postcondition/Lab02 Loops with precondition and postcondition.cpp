@@ -14,18 +14,22 @@ using namespace std;
 
 int main() {
   double t1, t2, delta1, delta2, lambda1, lambda2;
+
   cout << "Enter t1, t2, delta1 (cm), delta2 (cm), lambda1, lambda2:";
   cin >> t1 >> t2 >> delta1 >> delta2 >> lambda1 >> lambda2;
+
   double delta1Meters = delta1 / 100.0;
   double delta2Meters = delta2 / 100.0;
-  double k1 = lambda1 / delta1Meters;  //считаю дроби перед тем как подставить в формулу
-  double k2 = lambda2 / delta2Meters;  //считаю дроби перед тем как подставить в формулу
+  double k1 = lambda1 / delta1Meters;
+  double k2 = lambda2 / delta2Meters;
   double tc = (k1 * t1 + k2 * t2) / (k1 + k2);
+
   const double firstStart = 500.0;
   const double firstFinish = 400.0;
   const double secondStart = 250.0;
   const double secondFinish = 150.0;
   const double step = -100.0;
+
   cout << "\n t (deg) | x (m)\n";
   cout << "-----------------\n";
 
@@ -36,8 +40,7 @@ int main() {
   do {
     if (t > tc) {
       x = ((t - t1) / (tc - t1)) * delta1Meters;
-    }
-    else {
+    } else {
       x = ((t - tc) / (t2 - tc)) * delta2Meters + delta1Meters;
     }
 
@@ -53,8 +56,7 @@ int main() {
   while (t >= secondFinish) {
     if (t > tc) {
       x = ((t - t1) / (tc - t1)) * delta1Meters;
-    }
-    else {
+    } else {
       x = ((t - tc) / (t2 - tc)) * delta2Meters + delta1Meters;
     }
 
