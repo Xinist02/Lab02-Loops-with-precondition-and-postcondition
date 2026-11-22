@@ -8,32 +8,61 @@
 ************************************************/
 
 #include <iostream>
+#include <cmath>
+#include <iomanip>
 using namespace std;
 
 int main() {
-  const double firstStep = 0.5;
-  const double secondStep = 5.0;
-  const double start = 0.0;
-  const double changePoint = 2.0;
-  const double finish = 17.0;
+  double t1, t2, delta1, delta2, lambda1, lambda2;
+  cout << "Enter t1, t2, delta1 (cm), delta2 (cm), lambda1, lambda2:";
+  cin >> t1 >> t2 >> delta1 >> delta2 >> lambda1 >> lambda2;
+  double delta1Meters = delta1 / 100.0;
+  double delta2Meters = delta2 / 100.0;
+  double k1 = lambda1 / delta1Meters;  //считаю дроби перед тем как подставить в формулу
+  double k2 = lambda2 / delta2Meters;  //считаю дроби перед тем как подставить в формулу
+  double tc = (k1 * t1 + k2 * t2) / (k1 + k2);
+  const double firstStart = 500.0;
+  const double firstFinish = 400.0;
+  const double secondStart = 250.0;
+  const double secondFinish = 150.0;
+  const double step = -100.0;
+  cout << "\n t (deg) | x (m)\n";
+  cout << "-----------------\n";
+
   int stepIndex = 0;
-  double argument = start;
-  double result;
+  double t = firstStart;
+  double x;
 
   do {
-    result = argument * argument;
-    cout << argument << " " << result << "\n";
-    ++stepIndex;
-    argument = start + stepIndex * firstStep;
-  } while (argument <= changePoint);
+    if (t > tc) {
+      x = ((t - t1) / (tc - t1)) * delta1Meters;
+    }
+    else {
+      x = ((t - tc) / (t2 - tc)) * delta2Meters + delta1Meters;
+    }
 
-  stepIndex = 1;
-  argument = changePoint + stepIndex * secondStep;
-  while (argument <= finish) {
-    result = argument * argument;
-    cout << argument << " " << result << "\n";
+    cout << setw(7) << fixed << setprecision(0) << t << "  | "
+      << setprecision(3) << x << "\n";
+
     ++stepIndex;
-    argument = changePoint + stepIndex * secondStep;
+    t = firstStart + stepIndex * step;
+  } while (t >= firstFinish);
+
+  stepIndex = 0;
+  t = secondStart;
+  while (t >= secondFinish) {
+    if (t > tc) {
+      x = ((t - t1) / (tc - t1)) * delta1Meters;
+    }
+    else {
+      x = ((t - tc) / (t2 - tc)) * delta2Meters + delta1Meters;
+    }
+
+    cout << setw(7) << fixed << setprecision(0) << t << "  | "
+      << setprecision(3) << x << "\n";
+
+    ++stepIndex;
+    t = secondStart + stepIndex * step;
   }
   return 0;
 }
