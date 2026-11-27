@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Lab02 Loops with precondition and postcondition/Lab02 Loops with precondition and postcondition.vcxproj" Id="c83fa8e8-bab0-41ab-9f17-4de99fd6f894" />
+</Solution>
